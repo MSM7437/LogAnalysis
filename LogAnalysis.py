@@ -7,17 +7,26 @@ import urllib.request
 url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 
 # Local cache file path
-local_cache_file = "http_access_log.txt"
+local_file = "http_access_log.txt"
 
-def is_cache_outdated(cache_file):
-    if not os.path.exists(cache_file):
-        return True
-    last_modified_time = datetime.fromtimestamp(os.path.getmtime(cache_file))
-    current_time = datetime.now()
-    return (current_time - last_modified_time) > timedelta(hours=24)
-
-if not os.path.exists(local_cache_file) or is_cache_outdated(local_cache_file):
-    urllib.request.urlretrieve(url, local_cache_file)
+if os.path.exists(local_file):
+    print(f"The file '{local_file}' already exists. Download Cancelled.")
+else:
+    try:
+        # Open the URL and read its content
+        with urllib.request.urlopen(url) as response:
+            # Check if the HTTP response status code is 200 (OK)
+            if response.status == 200:
+                # Open a local file for writing the log data in binary mode ('wb')
+                with open(local_file, 'wb') as file:
+                    # Read the content from the response and write it to the local file
+                    file.write(response.read())
+                print("Log file downloaded successfully.")
+            else:
+                # If the status code is not 200, print an error message
+                print(f"Failed to download log file. Status code: {response.status}")
+    except Exception as e:
+        print(f"An error occurred during the download: {str(e)}")
 
 log_entry_pattern = r'\[(\d{2}/[A-Za-z]{3}/\d{4}:\d{2}:\d{2}:\d{2} -\d{4})\]'
 
@@ -29,7 +38,7 @@ six_months_ago = start_date - timedelta(days=180)
 
 total_requests = 0
 
-with open(local_cache_file, 'r') as log_file:
+with open(local_file, 'r') as log_file:
     for line in log_file:
         match = re.search(log_entry_pattern, line)
         if match:
@@ -39,3 +48,7 @@ with open(local_cache_file, 'r') as log_file:
 
 print(f"Total requests in the past 6 months: {total_requests}")
 
+with open(local_file , 'r') as file:
+    li = file.readlines()
+total_log = len(li)
+print(f"Number of total requests: {total_log}")
