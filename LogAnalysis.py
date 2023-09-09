@@ -47,8 +47,3 @@ with open(local_file, 'r') as log_file:
                 total_requests += 1
 
 print(f"Total requests in the past 6 months: {total_requests}")
-
-with open(local_file , 'r') as file:
-    li = file.readlines()
-total_log = len(li)
-print(f"Number of total requests: {total_log}")
