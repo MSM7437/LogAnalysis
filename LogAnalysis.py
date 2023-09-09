@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta, timezone
 import urllib.request
 
+
 # URL of the log file
 url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 
@@ -26,7 +27,8 @@ else:
                 # If the status code is not 200, print an error message
                 print(f"Failed to download log file. Status code: {response.status}")
     except Exception as e:
-        print(f"An error occurred during the download: {str(e)}")
+        # Handle any exceptions that may occur during the process
+        print(f"An error occurred: {str(e)}")
 
 #6 months of entries
 log_entry_pattern = r'\[(\d{2}/[A-Za-z]{3}/\d{4}:\d{2}:\d{2}:\d{2} -\d{4})\]'
@@ -49,3 +51,8 @@ with open(local_file, 'r') as log_file:
 
 print(f"Total requests in the past 6 months: {total_requests}")
 
+#Total number of request
+with open(local_file , 'r') as file:
+    li = file.readlines()
+total_log = len(li)
+print(f"Number of total requests: {total_log}")
