@@ -7,7 +7,7 @@ import urllib.request
 url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 
 # Local cache file path
-local_file = "http_access_log.txt"
+local_file = "downloaded_log_file.log "
 
 if os.path.exists(local_file):
     print(f"The file '{local_file}' already exists. Download Cancelled.")
@@ -28,6 +28,7 @@ else:
     except Exception as e:
         print(f"An error occurred during the download: {str(e)}")
 
+#6 months of entries
 log_entry_pattern = r'\[(\d{2}/[A-Za-z]{3}/\d{4}:\d{2}:\d{2}:\d{2} -\d{4})\]'
 
 utc_timezone = timezone.utc
