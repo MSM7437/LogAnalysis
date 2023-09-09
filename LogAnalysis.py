@@ -3,7 +3,7 @@ import os #module allows interaction with operating system
 
 # Replace 'your_url_here' with the actual URL of the log file you want to download
 url = 'https://s3.amazonaws.com/tcmg476/http_access_log'  # Set the URL of the log file to download.
-local_file = 'downloaded_logfile.log'
+local_file = 'downloaded_log_file.log'
 
 if os.path.exists(local_file):
     print(f"The file '{local_file}' already exists. Download Cancelled.") 
