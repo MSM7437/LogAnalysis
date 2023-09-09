@@ -48,3 +48,4 @@ with open(local_file, 'r') as log_file:
                 total_requests += 1
 
 print(f"Total requests in the past 6 months: {total_requests}")
+
