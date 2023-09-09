@@ -27,3 +27,7 @@ else:
         # Handle any exceptions that may occur during the process
         print(f"An error occurred: {str(e)}")
     
+with open(local_file , 'r') as file:
+    li = file.readlines()
+total_log = len(li)
+print(f"Number of total requests: {total_log}")
