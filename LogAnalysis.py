@@ -7,7 +7,7 @@ import urllib.request
 url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 
 # Local cache file path
-local_file = "downloaded_log_file.log "
+local_file = "downloaded_log_file.log"
 
 if os.path.exists(local_file):
     print(f"The file '{local_file}' already exists. Download Cancelled.")
@@ -18,7 +18,7 @@ else:
             # Check if the HTTP response status code is 200 (OK)
             if response.status == 200:
                 # Open a local file for writing the log data in binary mode ('wb')
-                with open(local_file, 'wb') as file:
+                with open('downloaded_log_file.log', 'wb') as file:
                     # Read the content from the response and write it to the local file
                     file.write(response.read())
                 print("Log file downloaded successfully.")
