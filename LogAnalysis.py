@@ -11,7 +11,7 @@ url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 local_file = "downloaded_log_file.log"
 
 if os.path.exists(local_file):
-    print(f"The file '{local_file}' already exists. Performing Analysis, please wait.")
+    print(f"The file '{local_file}' already exists. Performing Analysis, please wait...")
 else:
     try:
         # Open the URL and read its content
