@@ -22,10 +22,10 @@ else:
                 with open('downloaded_log_file.log', 'wb') as file:
                     # Read the content from the response and write it to the local file
                     file.write(response.read())
-                print("Log file downloaded successfully. Performing analysis, please wait...")
+                print("Log file downloaded successfully. Performing Calculations, please wait...")
             else:
                 # If the status code is not 200, print an error message
-                print(f"Failed to download log file. Status code: {response.status}")
+                print(f"Log file failed to download. Status code: {response.status}")
     except Exception as e:
         # Handle any exceptions that may occur during the process
         print(f"An error occurred: {str(e)}")
@@ -49,10 +49,10 @@ with open(local_file, 'r') as log_file:
             if log_date >= six_months_ago:
                 total_requests += 1
 
-print(f"Total requests in the past 6 months: {total_requests}")
+print(f"The total number of requests in the past 6 months: {total_requests}")
 
 #Total number of request
 with open(local_file , 'r') as file:
     li = file.readlines()
 total_log = len(li)
-print(f"Number of total requests: {total_log}")
+print(f"The total number of requests found in the log: {total_log}")
