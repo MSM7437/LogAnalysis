@@ -22,7 +22,7 @@ else:
                 with open('downloaded_log_file.log', 'wb') as file:
                     # Read the content from the response and write it to the local file
                     file.write(response.read())
-                print("Log file downloaded successfully.")
+                print("Log file downloaded successfully. Performing analysis, please wait...")
             else:
                 # If the status code is not 200, print an error message
                 print(f"Failed to download log file. Status code: {response.status}")
