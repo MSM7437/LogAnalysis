@@ -101,6 +101,6 @@ def calculate_percentage_redirected(log_file_path):
 percentage_not_successful = calculate_percentage_not_successful(local_file)
 percentage_redirected = calculate_percentage_redirected(local_file)
 
-print(f"What percentage of the requests were not successful (4xx codes): {percentage_not_successful:.2f}%")
-print(f"What percentage of the requests were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
+print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
+print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
 
