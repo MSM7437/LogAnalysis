@@ -122,7 +122,7 @@ def extract_file_name(log_line):
 file_counts = {}
 
 # Read the log file line by line
-with open('your_log_file.log', 'r') as log_file:
+with open('downloaded_log_file.log', 'r') as log_file:
     for line in log_file:
         # Extract the file name from the log line
         file_name = extract_file_name(line)
