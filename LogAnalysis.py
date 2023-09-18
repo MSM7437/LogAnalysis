@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta, timezone
 import urllib.request
 
+
 # URL of the log file
 url = "https://s3.amazonaws.com/tcmg476/http_access_log"
 
@@ -50,13 +51,12 @@ print(f"The total number of requests found in the log: {total_log}")
 log_folder = "monthly_logs"
 os.makedirs(log_folder, exist_ok=True)
 
-# Initialize a dictionary to store log files by month
 log_files_by_month = {}
 
 def get_month_year_key(log_date):
     return log_date.strftime("%Y_%m")
 
-# Read the log file and separate entries by month
+# Log separated by month so marketing can analyze each monthly period, (13 different files/month)
 with open(local_file, 'r') as log_file:
     for line in log_file:
         match = re.search(log_entry_pattern, line)
