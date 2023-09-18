@@ -104,4 +104,3 @@ percentage_redirected = percentage_of_status_code(local_file, 300, 400)
 
 print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
 print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
-
