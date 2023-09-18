@@ -104,3 +104,38 @@ percentage_redirected = percentage_of_status_code(local_file, 300, 400)
 
 print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
 print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
+
+# Most Commonly Requested File
+
+def extract_file_name(log_line):
+    # Example regex pattern to extract the file name from a URL in a log line
+    url_pattern = r'GET\s+(/[^ ]+)'
+    match = re.search(url_pattern, log_line)
+    if match:
+        # Return the matched part (file path)
+        return match.group(1)
+    else:
+        # Return None if no match is found
+        return None
+
+# Initialize an empty dictionary to store file request counts
+file_counts = {}
+
+# Read the log file line by line
+with open('your_log_file.log', 'r') as log_file:
+    for line in log_file:
+        # Extract the file name from the log line
+        file_name = extract_file_name(line)
+
+        # Update the file request count in the dictionary
+        if file_name:
+            if file_name in file_counts:
+                file_counts[file_name] += 1
+            else:
+                file_counts[file_name] = 1
+
+# Find the most requested file
+most_requested_file = max(file_counts, key=file_counts.get)
+request_count = file_counts[most_requested_file]
+
+print(f"The most commonly requested file is '{most_requested_file}' with {request_count} requests.")
