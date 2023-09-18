@@ -56,3 +56,17 @@ with open(local_file , 'r') as file:
     li = file.readlines()
 total_log = len(li)
 print(f"Number of total requests: {total_log}")
+
+#Least requested file
+file_counter = Counter()
+with open(local_file, 'r') as file:
+    for line in file:
+        parts = line.split()
+        if len(parts) >= 7:
+            requested_file = parts[6]  
+            file_counter[requested_file] += 1
+
+least_requested_file, request_count = file_counter.most_common()[-1]
+
+print(f"The least requested file is: {least_requested_file}")
+print(f"It was requested {request_count} time(s).")
