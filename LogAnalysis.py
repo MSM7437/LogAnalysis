@@ -2,6 +2,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 import urllib.request
+from collections import Counter
 
 
 # URL of the log file
@@ -118,24 +119,21 @@ def extract_file_name(log_line):
         # Return None if no match is found
         return None
 
-# Initialize an empty dictionary to store file request counts
-file_counts = {}
+# Most requested file
 
-# Read the log file line by line
-with open('downloaded_log_file.log', 'r') as log_file:
-    for line in log_file:
-        # Extract the file name from the log line
-        file_name = extract_file_name(line)
+file_counter = Counter()
 
-        # Update the file request count in the dictionary
-        if file_name:
-            if file_name in file_counts:
-                file_counts[file_name] += 1
-            else:
-                file_counts[file_name] = 1
+with open('downloaded_log_file.log', 'r') as file:
+    for line in file:
+        parts = line.split()
+        if len(parts) >= 7:
+            requested_file = parts[6]  
+            file_counter[requested_file] += 1
 
-# Find the most requested file
-most_requested_file = max(file_counts, key=file_counts.get)
-request_count = file_counts[most_requested_file]
+if file_counter:
+    most_requested_file, request_count = file_counter.most_common(1)[0]
 
-print(f"The most commonly requested file is '{most_requested_file}' with {request_count} requests.")
+    print(f"The most requested file is: {most_requested_file}")
+    print(f"It was requested {request_count} time(s).")
+else:
+    print("No valid file requests found in the log file.")
