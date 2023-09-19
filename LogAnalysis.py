@@ -106,19 +106,6 @@ percentage_redirected = percentage_of_status_code(local_file, 300, 400)
 print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
 print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
 
-# Most Commonly Requested File
-
-def extract_file_name(log_line):
-    # Example regex pattern to extract the file name from a URL in a log line
-    url_pattern = r'GET\s+(/[^ ]+)'
-    match = re.search(url_pattern, log_line)
-    if match:
-        # Return the matched part (file path)
-        return match.group(1)
-    else:
-        # Return None if no match is found
-        return None
-
 # Most requested file
 
 file_counter = Counter()
