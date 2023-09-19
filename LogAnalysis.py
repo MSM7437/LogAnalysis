@@ -79,6 +79,23 @@ print(f"The total number of requests in the past 6 months: {six_month_total}")
 for log_file in log_files_by_month.values():
     log_file.close()
 
+# Number of requests made each day, each week on average, and each month on average
+average_daily = 0
+average_weekly = 0
+average_monthly = 0
+
+log_time_days = 353
+log_time_weeks = (353 / 7)
+log_time_months = (353 / 30)
+
+average_daily = total_log // log_time_days
+average_weekly =  total_log // log_time_weeks
+average_monthly = total_log // log_time_months
+
+print(f"The average number of requests per day: {average_daily}")
+print(f"The average number of requests per week: {average_weekly}")
+print(f"The average number of requests per month: {average_monthly}")
+    
 # Percent of unsuccessful or redirected logs
 def percentage_of_status_code(log_file_path, start_code, end_code):
     count = 0
