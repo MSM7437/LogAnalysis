@@ -39,20 +39,68 @@ start_date = datetime(1995, 10, 11, tzinfo=utc_timezone)
 
 six_months_ago = start_date - timedelta(days=180)
 
-total_requests = 0
-
-with open(local_file, 'r') as log_file:
-    for line in log_file:
-        match = re.search(log_entry_pattern, line)
-        if match:
-            log_date = datetime.strptime(match.group(1), '%d/%b/%Y:%H:%M:%S %z')
-            if log_date >= six_months_ago:
-                total_requests += 1
-
-print(f"The total number of requests in the past 6 months: {total_requests}")
+six_month_total = 0
 
 #Total number of request
 with open(local_file , 'r') as file:
     li = file.readlines()
 total_log = len(li)
 print(f"The total number of requests found in the log: {total_log}")
+
+# Monthly files & 6 months of log
+log_folder = "monthly_logs"
+os.makedirs(log_folder, exist_ok=True)
+
+log_files_by_month = {}
+
+def get_month_year_key(log_date):
+    return log_date.strftime("%Y_%m")
+
+# Log separated by month so marketing can analyze each monthly period, (13 different files/month)
+with open(local_file, 'r') as log_file:
+    for line in log_file:
+        match = re.search(log_entry_pattern, line)
+        if match:
+            log_date = datetime.strptime(match.group(1), '%d/%b/%Y:%H:%M:%S %z')
+            if log_date >= six_months_ago:
+                six_month_total += 1
+
+            month_year_key = get_month_year_key(log_date)
+
+            if month_year_key not in log_files_by_month:
+                log_file_path = os.path.join(log_folder, f"log_{month_year_key}.log")
+                log_files_by_month[month_year_key] = open(log_file_path, 'a')
+
+            log_files_by_month[month_year_key].write(line)
+
+print(f"The total number of requests in the past 6 months: {six_month_total}")
+
+for log_file in log_files_by_month.values():
+    log_file.close()
+
+# Percent of unsuccessful or redirected logs
+def percentage_of_status_code(log_file_path, start_code, end_code):
+    count = 0
+    total_requests = 0
+
+    with open(log_file_path, 'r') as log_file:
+        for line in log_file:
+            total_requests += 1
+            status_code_match = re.search(r'\s(\d{3})\s', line)
+            if status_code_match:
+                status_code = int(status_code_match.group(1))
+                if start_code <= status_code < end_code:
+                    count += 1
+
+    if total_requests > 0:
+        percentage = (count / total_requests) * 100
+    else:
+        percentage = 0.0
+
+    return percentage
+
+percentage_not_successful = percentage_of_status_code(local_file, 400, 500)
+percentage_redirected = percentage_of_status_code(local_file, 300, 400)
+
+print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
+print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
