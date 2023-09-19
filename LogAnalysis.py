@@ -2,6 +2,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 import urllib.request
+from collections import Counter
 
 
 # URL of the log file
