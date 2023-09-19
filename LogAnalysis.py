@@ -104,3 +104,17 @@ percentage_redirected = percentage_of_status_code(local_file, 300, 400)
 
 print(f"Percentage of the requests that were not successful (4xx codes): {percentage_not_successful:.2f}%")
 print(f"Percentage of the requests that were redirected elsewhere (3xx codes): {percentage_redirected:.2f}%")
+
+#Least requested file
+file_counter = Counter()
+with open(local_file, 'r') as file:
+    for line in file:
+        parts = line.split()
+        if len(parts) >= 7:
+            requested_file = parts[6]  
+            file_counter[requested_file] += 1
+
+least_requested_file, request_count = file_counter.most_common()[-1]
+
+print(f"The least requested file is: {least_requested_file}")
+print(f"It was requested {request_count} time(s).")
