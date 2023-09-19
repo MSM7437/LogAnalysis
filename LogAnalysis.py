@@ -137,21 +137,3 @@ least_requested_file, request_count = file_counter.most_common()[-1]
 print(f"The least requested file is: {least_requested_file}")
 print(f"It was requested {request_count} time(s).")
 
-# Most requested file
-
-file_counter = Counter()
-
-with open('downloaded_log_file.log', 'r') as file:
-    for line in file:
-        parts = line.split()
-        if len(parts) >= 7:
-            requested_file = parts[6]  
-            file_counter[requested_file] += 1
-
-if file_counter:
-    most_requested_file, request_count = file_counter.most_common(1)[0]
-
-    print(f"The most requested file is: {most_requested_file}")
-    print(f"It was requested {request_count} time(s).")
-else:
-    print("No valid file requests found in the log file.")
